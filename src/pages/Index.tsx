@@ -117,47 +117,34 @@ const Index = () => {
         </section>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Knowledge Base */}
+          {/* News */}
           <div className="lg:col-span-2">
             <Card>
               <CardHeader>
                 <div className="flex items-center space-x-2">
-                  <Icon name="Search" size={20} className="text-blue-600" />
-                  <CardTitle>База знаний</CardTitle>
+                  <Icon name="Newspaper" size={20} className="text-blue-600" />
+                  <CardTitle>Новости</CardTitle>
                 </div>
                 <CardDescription>
-                  Найдите решения типовых проблем и ответы на часто задаваемые вопросы
+                  Актуальные объявления и обновления от департамента IT
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="mb-6">
-                  <div className="relative">
-                    <Icon name="Search" size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
-                    <Input
-                      placeholder="Поиск по базе знаний..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
-                    />
-                  </div>
-                </div>
-                
-                <div className="space-y-4">
-                  {filteredKnowledge.map((item) => (
-                    <div key={item.id} className="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
-                      <div className="flex items-start justify-between mb-2">
-                        <h4 className="font-medium text-slate-900">{item.title}</h4>
-                        <Badge variant="secondary" className="ml-2">
-                          {item.category}
+                <div className="space-y-6">
+                  {news.map((item) => (
+                    <div key={item.id} className="border border-slate-200 rounded-lg p-6 hover:border-blue-300 transition-colors">
+                      <div className="flex items-start justify-between mb-3">
+                        <h3 className="text-lg font-semibold text-slate-900">{item.title}</h3>
+                        <Badge variant="outline" className="ml-4">
+                          {item.date}
                         </Badge>
                       </div>
-                      <p className="text-sm text-slate-600 mb-3">{item.solution}</p>
-                      <div className="flex flex-wrap gap-1">
-                        {item.tags.map((tag, index) => (
-                          <Badge key={index} variant="outline" className="text-xs">
-                            {tag}
-                          </Badge>
-                        ))}
+                      <p className="text-slate-600 leading-relaxed">{item.description}</p>
+                      <div className="mt-4 pt-4 border-t border-slate-100">
+                        <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-700">
+                          Подробнее
+                          <Icon name="ArrowRight" size={14} className="ml-2" />
+                        </Button>
                       </div>
                     </div>
                   ))}
@@ -166,7 +153,7 @@ const Index = () => {
                 <div className="mt-6 text-center">
                   <Button className="bg-blue-600 hover:bg-blue-700">
                     <Icon name="Plus" size={16} className="mr-2" />
-                    Добавить в базу знаний
+                    Все новости
                   </Button>
                 </div>
               </CardContent>
@@ -175,30 +162,46 @@ const Index = () => {
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* News */}
+            {/* Knowledge Base */}
             <Card>
               <CardHeader>
                 <div className="flex items-center space-x-2">
-                  <Icon name="Newspaper" size={20} className="text-blue-600" />
-                  <CardTitle>Новости</CardTitle>
+                  <Icon name="Search" size={20} className="text-blue-600" />
+                  <CardTitle>База знаний</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-4">
-                  {news.map((item, index) => (
-                    <div key={item.id}>
-                      <div className="space-y-2">
-                        <h4 className="font-medium text-slate-900 text-sm">{item.title}</h4>
-                        <p className="text-xs text-slate-500">{item.date}</p>
-                        <p className="text-sm text-slate-600">{item.description}</p>
+                <div className="mb-4">
+                  <div className="relative">
+                    <Icon name="Search" size={16} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                    <Input
+                      placeholder="Поиск решений..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className="pl-10"
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-3">
+                  {filteredKnowledge.slice(0, 3).map((item) => (
+                    <div key={item.id} className="border border-slate-200 rounded-lg p-3 hover:border-blue-300 transition-colors">
+                      <h4 className="font-medium text-slate-900 text-sm mb-2">{item.title}</h4>
+                      <div className="flex flex-wrap gap-1 mb-2">
+                        {item.tags.slice(0, 2).map((tag, index) => (
+                          <Badge key={index} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
                       </div>
-                      {index < news.length - 1 && <Separator className="mt-4" />}
+                      <p className="text-xs text-slate-600 line-clamp-2">{item.solution}</p>
                     </div>
                   ))}
                 </div>
+                
                 <div className="mt-4">
                   <Button variant="outline" size="sm" className="w-full">
-                    Все новости
+                    Вся база знаний
                   </Button>
                 </div>
               </CardContent>
